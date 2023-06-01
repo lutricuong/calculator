@@ -11,9 +11,11 @@ let num2;
 let op;
 
 function numberAndOp(str) {
+    if (display.textContent == '') return result.textContent = 0;
     num1 = +str[0];
     num2 = +str[2];
     op = str[1];
+    if (arrNumAndOp.length == 1 || arrNumAndOp.length == 2) return result.textContent = num1;
     if (op == "+") return result.textContent = num1 + num2;
     if (op == "-") return result.textContent = num1 - num2;
     if (op == "x") return result.textContent = num1 * num2;
@@ -28,9 +30,7 @@ c.addEventListener('click', () => {
     display.textContent = display.textContent.slice(0,display.textContent.length -1);
 });
 equal.addEventListener('click', () => {
-    if (arrNumAndOp.length == 3) {
         numberAndOp(arrNumAndOp);
-    }
 })
 
 numAll.forEach(num => {
