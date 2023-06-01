@@ -49,5 +49,15 @@ operation.forEach(oper => {
             display.textContent += ' ';
             display.textContent += oper.textContent;
             display.textContent += ' ';
+            arrNumAndOp = display.textContent.split(' ');
+            if (arrNumAndOp[2] == '') {
+                arrNumAndOp.pop();
+            }
+            console.log(arrNumAndOp);
+            if (arrNumAndOp.length > 3) {
+                numberAndOp(arrNumAndOp);
+                display.textContent = result.textContent + ' ' + oper.textContent + ' ';
+            }
     })
 })
+
