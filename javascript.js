@@ -22,19 +22,29 @@ function numberAndOp(str) {
     if (op == "/") return result.textContent = num1 / num2;
 }
 
+function addAndRemoveTransition(e) {
+    e.classList.add('play');
+    e.addEventListener('transitionend', () => {
+        e.classList.remove('play')
+    });
+}
 ac.addEventListener('click', () => {
+    addAndRemoveTransition(ac);
     display.textContent = '';
     result.textContent = 0;
 });
 c.addEventListener('click', () => {
+    addAndRemoveTransition(c);
     display.textContent = display.textContent.slice(0,display.textContent.length -1);
 });
 equal.addEventListener('click', () => {
-        numberAndOp(arrNumAndOp);
+    addAndRemoveTransition(equal);
+    numberAndOp(arrNumAndOp);
 })
 
 numAll.forEach(num => {
     num.addEventListener('click', () => {
+        addAndRemoveTransition(num);
         display.textContent += num.textContent;
         arrNumAndOp = display.textContent.split(' ');
         if (arrNumAndOp[2] == '') {
@@ -46,6 +56,7 @@ numAll.forEach(num => {
 
 operation.forEach(oper => {
     oper.addEventListener('click', () => {
+            addAndRemoveTransition(oper);
             display.textContent += ' ';
             display.textContent += oper.textContent;
             display.textContent += ' ';
@@ -59,5 +70,5 @@ operation.forEach(oper => {
                 display.textContent = result.textContent + ' ' + oper.textContent + ' ';
             }
     })
-})
+});
 
