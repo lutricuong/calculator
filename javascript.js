@@ -27,13 +27,12 @@ function addAndRemoveTransition(e) {
         e.classList.remove('play')
     });
 }
-
-ac.addEventListener('click', () => {
+function acClear() {
     addAndRemoveTransition(ac);
     display.textContent = 0;
-    result.textContent = '';
-});
-c.addEventListener('click', () => {
+    result.textContent = ''; 
+}
+function cDelete() {
     addAndRemoveTransition(c);
     if (result.textContent != '') {
         display.textContent = 0;
@@ -43,61 +42,56 @@ c.addEventListener('click', () => {
         display.textContent = display.textContent.slice(0,display.textContent.length -3);
     }
     else     display.textContent = display.textContent.slice(0,display.textContent.length -1);
-    
-});
-equal.addEventListener('click', () => {
+}
+function setEqual() {
     addAndRemoveTransition(equal);
     numberAndOp(arrNumAndOp);
-})
+}
+function setNum(e) {
+    addAndRemoveTransition(e);
+    if (display.textContent == 0) {
+        display.textContent = '';
+        display.textContent += e.textContent;
+    }
+    else display.textContent += e.textContent;
+    arrNumAndOp = display.textContent.split(' ');
+    if (arrNumAndOp[2] == '') {
+        arrNumAndOp.pop();
+    }
+}
+function setOper(e) {
+    addAndRemoveTransition(e);
+    if (display.textContent.slice(display.textContent.length-2,display.textContent.length) == '+ '
+        || display.textContent.slice(display.textContent.length-2,display.textContent.length) == '- '
+        || display.textContent.slice(display.textContent.length-2,display.textContent.length) == 'x '
+        || display.textContent.slice(display.textContent.length-2,display.textContent.length) == '/ ') {
+        display.textContent = display.textContent.slice(0,display.textContent.length -3);   
+    }
+    if (e.textContent == '-' && display.textContent == '0') {
+        display.textContent = '-';
+    }
+    else if (e.textContent == '+' && display.textContent == ''
+        || e.textContent == 'x' && display.textContent == ''
+        || e.textContent == '/' && display.textContent == '') {
+        display.textContent = '';
+    }
+    else {
+        display.textContent += ' ';
+        display.textContent += e.textContent;
+        display.textContent += ' ';
+    }
+    arrNumAndOp = display.textContent.split(' ');
+    if (arrNumAndOp[2] == '') {
+        arrNumAndOp.pop();
+    }
+    if (arrNumAndOp.length > 3) {
+        numberAndOp(arrNumAndOp);
+        display.textContent = result.textContent + ' ' + e.textContent + ' ';
+    }
+}
 
-numAll.forEach(num => {
-    num.addEventListener('click', () => {
-        addAndRemoveTransition(num);
-        if (display.textContent == 0) {
-            display.textContent = '';
-            display.textContent += num.textContent;
-        }
-        else display.textContent += num.textContent;
-        arrNumAndOp = display.textContent.split(' ');
-        if (arrNumAndOp[2] == '') {
-            arrNumAndOp.pop();
-        }
-        console.log(arrNumAndOp);
-    });
-});
-
-operation.forEach(oper => {
-    oper.addEventListener('click', () => {
-        addAndRemoveTransition(oper);
-        if (display.textContent.slice(display.textContent.length-2,display.textContent.length) == '+ '
-            || display.textContent.slice(display.textContent.length-2,display.textContent.length) == '- '
-            || display.textContent.slice(display.textContent.length-2,display.textContent.length) == 'x '
-            || display.textContent.slice(display.textContent.length-2,display.textContent.length) == '/ ') {
-            display.textContent = display.textContent.slice(0,display.textContent.length -3);   
-        }
-        if (oper.textContent == '-' && display.textContent == '0') {
-            display.textContent = '-';
-        }
-        else if (oper.textContent == '+' && display.textContent == ''
-            || oper.textContent == 'x' && display.textContent == ''
-            || oper.textContent == '/' && display.textContent == '') {
-            display.textContent = '';
-        }
-        else {
-            display.textContent += ' ';
-            display.textContent += oper.textContent;
-            display.textContent += ' ';
-        }
-        arrNumAndOp = display.textContent.split(' ');
-        if (arrNumAndOp[2] == '') {
-            arrNumAndOp.pop();
-        }
-        console.log(arrNumAndOp);
-        if (arrNumAndOp.length > 3) {
-            numberAndOp(arrNumAndOp);
-            display.textContent = result.textContent + ' ' + oper.textContent + ' ';
-        }
-        console.log(display.textContent.slice(display.textContent.length-2,display.textContent.length));
-    })
-});
-
+ac.addEventListener('click', acClear);
+c.addEventListener('click', cDelete);
+equal.addEventListener('click', setEqual);
+numAll.forEach(num => num.addEventListener('click', () => setNum(num)));
+operation.forEach(oper => oper.addEventListener('click', () => setOper(oper)))
