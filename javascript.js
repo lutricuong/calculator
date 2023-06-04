@@ -69,7 +69,13 @@ numAll.forEach(num => {
 operation.forEach(oper => {
     oper.addEventListener('click', () => {
         addAndRemoveTransition(oper);
-        if (oper.textContent == '-' && display.textContent == '') {
+        if (display.textContent.slice(display.textContent.length-2,display.textContent.length) == '+ '
+            || display.textContent.slice(display.textContent.length-2,display.textContent.length) == '- '
+            || display.textContent.slice(display.textContent.length-2,display.textContent.length) == 'x '
+            || display.textContent.slice(display.textContent.length-2,display.textContent.length) == '/ ') {
+            display.textContent = display.textContent.slice(0,display.textContent.length -3);   
+        }
+        if (oper.textContent == '-' && display.textContent == '0') {
             display.textContent = '-';
         }
         else if (oper.textContent == '+' && display.textContent == ''
@@ -91,6 +97,7 @@ operation.forEach(oper => {
             numberAndOp(arrNumAndOp);
             display.textContent = result.textContent + ' ' + oper.textContent + ' ';
         }
+        console.log(display.textContent.slice(display.textContent.length-2,display.textContent.length));
     })
 });
 
