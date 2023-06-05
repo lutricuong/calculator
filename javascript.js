@@ -10,22 +10,15 @@ let num1;
 let num2;
 let op;
 
-function numberAndOp(str) {
-    if (display.textContent == '') return result.textContent = 0;
-    num1 = +str[0];
-    num2 = +str[2];
-    op = str[1];
-    if (arrNumAndOp.length == 1 || arrNumAndOp.length == 2) return result.textContent = num1;
-    if (op == "+") return result.textContent = num1 + num2;
-    if (op == "-") return result.textContent = num1 - num2;
-    if (op == "x") return result.textContent = num1 * num2;
-    if (op == "/") return result.textContent = num1 / num2;
-}
+ac.addEventListener('click', acClear);
+c.addEventListener('click', cDelete);
+equal.addEventListener('click', () => setEqual(arrNumAndOp));
+numAll.forEach(num => num.addEventListener('click', () => setNum(num)));
+operation.forEach(oper => oper.addEventListener('click', () => setOper(oper)))
+
 function addAndRemoveTransition(e) {
     e.classList.add('play');
-    e.addEventListener('transitionend', () => {
-        e.classList.remove('play')
-    });
+    e.addEventListener('transitionend', () => e.classList.remove('play'));
 }
 function acClear() {
     addAndRemoveTransition(ac);
@@ -34,18 +27,29 @@ function acClear() {
 }
 function cDelete() {
     addAndRemoveTransition(c);
-    if (result.textContent != '') {
+    if (display.textContent == 0 && result.textContent == '') {
         display.textContent = 0;
         result.textContent = '';
     }
-    else if (display.textContent.slice(display.textContent.length-1,display.textContent.length) == ' ') {
+    else if (result.textContent != '') {
+        display.textContent = 0;
+        result.textContent = '';
+    }
+    else if (display.textContent.slice(display.textContent.length-1) == ' ') {
         display.textContent = display.textContent.slice(0,display.textContent.length -3);
     }
     else     display.textContent = display.textContent.slice(0,display.textContent.length -1);
 }
-function setEqual() {
+function setEqual(e) {
     addAndRemoveTransition(equal);
-    numberAndOp(arrNumAndOp);
+    num1 = +e[0];
+    num2 = +e[2];
+    op = e[1];
+    if (e.length == 1 || e.length == 2) return result.textContent = num1;
+    if (op == "+") return result.textContent = num1 + num2;
+    if (op == "-") return result.textContent = num1 - num2;
+    if (op == "x") return result.textContent = num1 * num2;
+    if (op == "/") return result.textContent = num1 / num2;
 }
 function setNum(e) {
     addAndRemoveTransition(e);
@@ -61,10 +65,10 @@ function setNum(e) {
 }
 function setOper(e) {
     addAndRemoveTransition(e);
-    if (display.textContent.slice(display.textContent.length-2,display.textContent.length) == '+ '
-        || display.textContent.slice(display.textContent.length-2,display.textContent.length) == '- '
-        || display.textContent.slice(display.textContent.length-2,display.textContent.length) == 'x '
-        || display.textContent.slice(display.textContent.length-2,display.textContent.length) == '/ ') {
+    if (display.textContent.slice(display.textContent.length-2) == '+ '
+        || display.textContent.slice(display.textContent.length-2) == '- '
+        || display.textContent.slice(display.textContent.length-2) == 'x '
+        || display.textContent.slice(display.textContent.length-2) == '/ ') {
         display.textContent = display.textContent.slice(0,display.textContent.length -3);   
     }
     if (e.textContent == '-' && display.textContent == '0') {
@@ -89,9 +93,3 @@ function setOper(e) {
         display.textContent = result.textContent + ' ' + e.textContent + ' ';
     }
 }
-
-ac.addEventListener('click', acClear);
-c.addEventListener('click', cDelete);
-equal.addEventListener('click', setEqual);
-numAll.forEach(num => num.addEventListener('click', () => setNum(num)));
-operation.forEach(oper => oper.addEventListener('click', () => setOper(oper)))
