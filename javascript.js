@@ -89,7 +89,7 @@ function setOper(e) {
         arrNumAndOp.pop();
     }
     if (arrNumAndOp.length > 3) {
-        numberAndOp(arrNumAndOp);
+        setEqual(arrNumAndOp);
         display.textContent = result.textContent + ' ' + e.textContent + ' ';
     }
 }
